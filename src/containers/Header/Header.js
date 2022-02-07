@@ -5,7 +5,7 @@ import { Link } from '@mui/material'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import GlobalStyles from '@mui/material/GlobalStyles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Link as RouterLink } from 'react-router-dom'
+import { NavLink as RouterLink } from 'react-router-dom'
 
 const theme = createTheme({
 	palette: {
@@ -18,7 +18,7 @@ const theme = createTheme({
 const LinkGlobalStyles = (
 	<GlobalStyles
 		styles={{
-			a: {
+			'.header__link': {
 				position: 'relative',
 				display: 'flex',
 				gap: '10px',
@@ -45,7 +45,23 @@ const LinkGlobalStyles = (
 				'&:hover::after': {
 					width: 121,
 				},
+
 			},
+			".active": {
+				color: '#1890FF !important',
+				'&:after': {
+					content: '""',
+					position: 'absolute',
+					bottom: '0',
+					display: 'block',
+					width: 121,
+					height: '2px',
+					marginTop: '-2px',
+					background: '#1890FF',
+					transition: 'width .3s ease',
+				},
+			  }
+			  
 		}}
 	/>
 )
@@ -54,11 +70,15 @@ export default function Header() {
 	return (
 		<ThemeProvider theme={theme}>
 			<AppBar
+
 				sx={{
 					backgroundColor: '#fff',
-					padding: '36px 130px',
+					maxWidth: 1200,
+					margin: '36px auto',	
+					mb: '74px',
 					boxShadow: 'none',
 					position: 'relative',
+					padding: '0 16px'
 				}}>
 				<Toolbar
 					sx={{
@@ -68,12 +88,12 @@ export default function Header() {
 						gap: '20px',
 					}}>
 					{LinkGlobalStyles}
-					<Link component={RouterLink} to="/" underline="none">
+					<Link component={RouterLink} to="/" underline="none" className='header__link' >
 						<MailOutlineIcon fontSize="small" />
 						События
 					</Link>
-					<Link component={RouterLink} to="/calendar" underline="none">
-						<MailOutlineIcon fontSize="small" />
+					<Link component={RouterLink} to="/calendar" underline="none"  className='header__link'>
+					<MailOutlineIcon fontSize="small" />
 						Календарь
 					</Link>
 				</Toolbar>
