@@ -9,9 +9,10 @@ function App() {
 		<>
 			<Header />
 			<Routes>
-				<Route path="/" element={<EventsPage />} />
+				<Route exact path="/" element={<EventsPage />} />
 				<Route path="/calendar" />
 				<Route path="/:id" element={<CardDetail />} />
+			
 			</Routes>
 		</>
 	)

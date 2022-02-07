@@ -10,6 +10,7 @@ export default function Calendar(props) {
 	const handleChange = (event) => {
 		setValue(event.target.value)	
 	}
+
 	return (
 		<Box >
 			<FormControl sx={{ minWidth: 72, maxHeight: 32 }} size="small"	>

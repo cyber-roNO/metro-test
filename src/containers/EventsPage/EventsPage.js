@@ -25,7 +25,7 @@ export default function EventsPage() {
 			)
 	}, [])
 
-	const years = [2019, 2020, 2021, 2022]
+	const years = [2020, 2021, 2022]
 	const mounths = [
 		'Янв',
 		'Фев',

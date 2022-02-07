@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Container, CardMedia } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import '../../containers/EventsPage/loader.css'
+import moment from 'moment'
 
 import Cover from '../../img/cover.png'
 
@@ -25,10 +26,13 @@ export default function CardDetail() {
 				}
 			)
 	}, [])
-	console.log(window.location.pathname)
+	
+	const id = +window.location.pathname.replace('/', '');
+	const itemId = items.filter((item) => (item.id===id))
+
 	if (error) {
 		return <div>Ошибка: {error.message}</div>
-	} else if (!isLoaded) {
+	} else if (!isLoaded ) {
 		return (
 			<div className="lds-roller">
 				<div></div>
@@ -41,55 +45,53 @@ export default function CardDetail() {
 				<div></div>
 			</div>
 		)
-	} else {
+	} else  {
 		return (
-			<Container
-				maxWidth="lg"
-				sx={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					gap: '80px',
-				}}>
-				<Box sx={{ flexBasis: '50%' }}>
-					<CardMedia component="img" height="341" image={Cover} alt="cover" />
-				</Box>
-				<Box sx={{ flexBasis: '50%' }}>
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							width: '100%',
-						}}
-						mb={'34px'}>
-						<Typography variant="h4" fontSize={24}>
-							Событие 1
-						</Typography>
+			<>
+				{itemId.length===0 ? null : <Container
+					maxWidth="lg"
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						gap: '80px',
+					}}>
+					<Box sx={{ flexBasis: '50%' }}>
+						<CardMedia component="img" height="341" image={itemId[0].image} alt="cover" />
+					</Box>
+					<Box sx={{ flexBasis: '50%' }}>
 						<Box
 							sx={{
-								color: '#722ED1',
-								padding: '1px 8px',
-								border: '1px solid #D3ADF7',
-								borderRadius: '2px',
-								background: '#F9F0FF',
-								lineHeight: '20px',
 								display: 'flex',
-								alignItems: 'center',
+								justifyContent: 'space-between',
+								width: '100%',
 							}}
-							fontSize={12}>
-							08.10.2021
+							mb={'34px'}>
+							<Typography variant="h4" fontSize={24}>
+								{itemId[0].title}
+							</Typography>
+							<Box
+								sx={{
+									color: '#722ED1',
+									padding: '1px 8px',
+									border: '1px solid #D3ADF7',
+									borderRadius: '2px',
+									background: '#F9F0FF',
+									lineHeight: '20px',
+									display: 'flex',
+									alignItems: 'center',
+								}}
+								fontSize={12}>
+								 {moment(itemId[0].date).format('DD.MM.YYYY')}
+							</Box>
 						</Box>
+						<Typography>
+							{itemId[0].description}
+						</Typography>
 					</Box>
-					<Typography>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						aliquip ex ea commodo consequat. Duis aute irure dolor in
-						reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						culpa qui officia deserunt mollit anim id est laborum.
-					</Typography>
-				</Box>
-			</Container>
+				</Container>}
+				
+			</>
 		)
 	}
+
 }

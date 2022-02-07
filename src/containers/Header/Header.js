@@ -2,10 +2,11 @@ import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import { Link } from '@mui/material'
-import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import GlobalStyles from '@mui/material/GlobalStyles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { NavLink as RouterLink } from 'react-router-dom'
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined'
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 
 const theme = createTheme({
 	palette: {
@@ -70,15 +71,15 @@ export default function Header() {
 	return (
 		<ThemeProvider theme={theme}>
 			<AppBar
-
+				position='static'
 				sx={{
 					backgroundColor: '#fff',
-					maxWidth: 1200,
-					margin: '36px auto',	
+					maxWidth: 1185,
+					margin:'0 auto',
+					mt: '36px',	
 					mb: '74px',
 					boxShadow: 'none',
-					position: 'relative',
-					padding: '0 16px'
+				
 				}}>
 				<Toolbar
 					sx={{
@@ -88,12 +89,12 @@ export default function Header() {
 						gap: '20px',
 					}}>
 					{LinkGlobalStyles}
-					<Link component={RouterLink} to="/" underline="none" className='header__link' >
-						<MailOutlineIcon fontSize="small" />
+					<Link component={RouterLink} to="/" underline="none" className='header__link' activeclassname="link__active" >
+						<GridViewOutlinedIcon fontSize="small" />
 						События
 					</Link>
 					<Link component={RouterLink} to="/calendar" underline="none"  className='header__link'>
-					<MailOutlineIcon fontSize="small" />
+					<EventNoteOutlinedIcon fontSize="small" />
 						Календарь
 					</Link>
 				</Toolbar>
