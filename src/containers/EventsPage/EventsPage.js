@@ -1,56 +1,85 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Calendar from '../../components/Calendar/Calendar'
-import { Box, Grid, Container} from '@mui/material'
+import { Box, Container } from '@mui/material'
 
 import MyCard from '../../components/Card/Card'
-import Cover from '../../img/cover.png'
-
-
+import './loader.css'
 export default function EventsPage() {
-	const years = [2019,2020,2021,2022]	
-	const mounths = ['Янв','Фев','Март', 'Апр','Май','Июнь', 'Июль', 'Авг', 'Сен', 'Окт','Дек']	
-	
+	const [error, setError] = useState(null)
+	const [isLoaded, setIsLoaded] = useState(false)
+	const [items, setItems] = useState([])
 
-	const cards = [
-		{
-			name: 'Событие 1', date: '05.10.2021', img: {Cover}
-		},
-		{
-			name: 'Событие 2', date: '08.10.2021', img: {Cover}
-		},
-		{
-			name: 'Событие 3', date: '12.10.2021', img: {Cover}
-		},
-		{
-			name: 'Событие 4', date: '14.10.2021', img: {Cover}
-		},
-		{
-			name: 'Событие 5', date: '16.10.2021', img: {Cover}
-		},
-		{
-			name: 'Событие 6', date: '18.10.2021', img	: {Cover}
-		},
+	useEffect(() => {
+		fetch('https://run.mocky.io/v3/49b8fbae-13e6-4aac-a8d1-644e3881cc62')
+			.then((res) => res.json())
+			.then(
+				(result) => {
+					setIsLoaded(true)
+					setItems(result)
+				},
+
+				(error) => {
+					setIsLoaded(true)
+					setError(error)
+				}
+			)
+	}, [])
+
+	const years = [2019, 2020, 2021, 2022]
+	const mounths = [
+		'Янв',
+		'Фев',
+		'Март',
+		'Апр',
+		'Май',
+		'Июнь',
+		'Июль',
+		'Авг',
+		'Сен',
+		'Окт',
+		'Дек',
 	]
-	return (
-		<Container
-			maxWidth="md"
-			
-		>
-			<Box sx={{display: 'flex',flexDirection: 'row',gap: '8px', justifyContent: 'flex-end',marginBottom:'28px'}}>
-				<Calendar options={years}/>
-				<Calendar options={mounths}/>
-			</Box>
-			<Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-
-				{cards.map((card,index)=>(
-					<Grid item xs={2} sm={4} md={4} key={index}>
-						<MyCard
-							card={card}
-						/>
-					</Grid>
-				))}
-
-			</Grid>
-		</Container>
-	)
+	if (error) {
+		return <div>Ошибка: {error.message}</div>
+	} else if (!isLoaded) {
+		return (
+			<div className="lds-roller">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		)
+	} else {
+		return (
+			<Container maxWidth="md">
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						gap: '8px',
+						justifyContent: 'flex-end',
+						marginBottom: '28px',
+					}}>
+					<Calendar options={years} />
+					<Calendar options={mounths} />
+				</Box>
+				<Box
+					sx={{
+						display: 'flex',
+						flexWrap: 'wrap',
+						justifyContent: 'space-between',
+						gap: '105px',
+					}}>
+					{items.map((card, index) => (
+						<MyCard card={card} key={index} />
+					))}
+				</Box>
+			</Container>
+		)
+	}
 }
