@@ -1,10 +1,50 @@
 import React, { useState, useEffect } from 'react'
 import Calendar from '../../components/Calendar/Calendar'
 import { Box, Container } from '@mui/material'
+import moment from 'moment'
+import 'moment/locale/ru'
 
 import MyCard from '../../components/Card/Card'
 import './loader.css'
 export default function EventsPage() {
+	let [year, setYear] = useState(() => {
+		const saved = localStorage.getItem('year')
+		return saved || ''
+	})
+	let [mounth, setMounth] = useState(() => {
+		const saved = localStorage.getItem('mounth')
+		return saved || ''
+	})
+
+	const handleChangeYear = (event) => {
+		setYear(event.target.value)
+	}
+	const handleChangeMounth = (event) => {
+		setMounth(event.target.value)
+	}
+
+	useEffect(() => {
+		localStorage.setItem('year', year)
+		localStorage.setItem('mounth', mounth)
+	}, [year, mounth])
+
+	const years = ['2020', '2021', '2022', 'все года']
+	const mounths = {
+		1: 'январь',
+		2: 'февраль',
+		3: 'март',
+		4: 'апрель',
+		5: 'май',
+		6: 'июнь',
+		7: 'июль',
+		8: 'август',
+		9: 'сентябрь',
+		10: 'октябрь',
+		11: 'ноябрь',
+		12: 'декабрь',
+		13: 'все месяцы',
+	}
+
 	const [error, setError] = useState(null)
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [items, setItems] = useState([])
@@ -24,21 +64,12 @@ export default function EventsPage() {
 				}
 			)
 	}, [])
-
-	const years = [2020, 2021, 2022]
-	const mounths = [
-		'Янв',
-		'Фев',
-		'Март',
-		'Апр',
-		'Май',
-		'Июнь',
-		'Июль',
-		'Авг',
-		'Сен',
-		'Окт',
-		'Дек',
-	]
+	if (!year) {
+		year = 'все года'
+	}
+	if (!mounth) {
+		mounth = 'все месяцы'
+	}
 	if (error) {
 		return <div>Ошибка: {error.message}</div>
 	} else if (!isLoaded) {
@@ -65,8 +96,16 @@ export default function EventsPage() {
 						justifyContent: 'flex-end',
 						marginBottom: '28px',
 					}}>
-					<Calendar options={years} />
-					<Calendar options={mounths} />
+					<Calendar
+						options={years}
+						value={year ? year : 'все года'}
+						handleChange={handleChangeYear}
+					/>
+					<Calendar
+						options={Object.values(mounths)}
+						value={mounth ? mounth : 'все месяцы'}
+						handleChange={handleChangeMounth}
+					/>
 				</Box>
 				<Box
 					sx={{
@@ -75,9 +114,20 @@ export default function EventsPage() {
 						justifyContent: 'space-between',
 						gap: '105px',
 					}}>
-					{items.map((card, index) => (
-						<MyCard card={card} key={index} />
-					))}
+					{year !== 'все года' && mounth !== 'все месяцы'
+						? items
+								.filter((item) => moment(item.date).format('YYYY') === year)
+								.filter((item) => moment(item.date).format('MMMM') === mounth)
+								.map((card, index) => <MyCard card={card} key={index} />)
+						: year === 'все года' && mounth !== 'все месяцы'
+						? items
+								.filter((item) => moment(item.date).format('MMMM') === mounth)
+								.map((card, index) => <MyCard card={card} key={index} />)
+						: year !== 'все года' && mounth === 'все месяцы'
+						? items
+								.filter((item) => moment(item.date).format('YYYY') === year)
+								.map((card, index) => <MyCard card={card} key={index} />)
+						: items.map((card, index) => <MyCard card={card} key={index} />)}
 				</Box>
 			</Container>
 		)
