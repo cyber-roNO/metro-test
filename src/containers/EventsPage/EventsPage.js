@@ -3,9 +3,9 @@ import Calendar from '../../components/Calendar/Calendar'
 import { Box, Container } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/ru'
-
 import MyCard from '../../components/Card/Card'
 import './loader.css'
+
 export default function EventsPage() {
 	let [year, setYear] = useState(() => {
 		const saved = localStorage.getItem('year')
@@ -87,15 +87,20 @@ export default function EventsPage() {
 		)
 	} else {
 		return (
-			
-			<Container maxWidth="md">
+			<Container
+				maxWidth="md"
+				sx={{
+					paddingLeft: '20px 	!important',
+					paddingRight: '20px !important',
+				}}>
 				<Box
 					sx={{
 						display: 'flex',
 						flexDirection: 'row',
 						gap: '8px',
 						justifyContent: 'flex-end',
-						marginBottom: '25px',
+						maxWidth: { xs: '335px', sm: '406px', md: 'initial' },
+						m: { xs: '0 auto 25px auto', md: '0 0 25px 0' },
 					}}>
 					<Calendar
 						options={years}
@@ -112,7 +117,7 @@ export default function EventsPage() {
 					sx={{
 						display: 'flex',
 						flexWrap: 'wrap',
-						justifyContent: 'space-between',
+						justifyContent: { xs: 'center', md: 'space-between' },
 						gap: '40px',
 					}}>
 					{year !== 'все года' && mounth !== 'все месяцы'

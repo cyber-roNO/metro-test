@@ -19,25 +19,24 @@ export const theme = createTheme({
 const LinkGlobalStyles = (
 	<GlobalStyles
 		styles={{
-			'*' :{
+			'*': {
 				margin: 0,
 				padding: 0,
 				boxSizing: 'border-box',
 			},
-			'body' : {
+			body: {
 				maxWidth: '1440px',
-				margin: '0 auto'
+				margin: '0 auto',
 			},
-			'html' : {
+			html: {
 				overflowX: 'hidden',
 				marginRight: 'calc(-1 * (100vw - 100%))',
-			  },
-			  'h3': {
-				  color: '#242424',
-				  fontWeight: '700 !important',
-				 
-			  },
-			
+			},
+			h3: {
+				color: '#242424',
+				fontWeight: '700 !important',
+			},
+
 			'.header__link': {
 				position: 'relative',
 				display: 'flex',
@@ -66,9 +65,8 @@ const LinkGlobalStyles = (
 				'&:hover::after': {
 					width: '100%',
 				},
-
 			},
-			".active": {
+			'.active': {
 				color: '#1890FF !important',
 				'&:after': {
 					content: '""',
@@ -81,8 +79,20 @@ const LinkGlobalStyles = (
 					background: '#1890FF',
 					transition: 'width .3s ease',
 				},
-			  }
-			  
+			},
+			'.modal-input label': {
+				fontSize: 14,
+				color: ' rgba(66, 66, 66, 0.45)',
+				lineHeight: 'inherit',
+			},
+			'.modal-input input': {
+				fontSize: 14,
+				color: '#242424',
+				padding: '6px 12px',
+			},
+			'.modal-input fieldset': {
+				borderColor: 'color: rgba(66, 66, 66, 0.45)',
+			},
 		}}
 	/>
 )
@@ -91,30 +101,47 @@ export default function Header() {
 	return (
 		<ThemeProvider theme={theme}>
 			<AppBar
-				position='static'
+				position="static"
 				sx={{
 					backgroundColor: '#fff',
-					
-					pt: '53px',	
-					mb: '115px',
+					pt: { xs: '27px', md: '53px' },
+					mb: { xs: '50px', md: '155px' },
+					m: {
+						xs: '0 auto 50px auto',
+						md: '0 auto 150px auto',
+						lg: '0 0 150px 0',
+					},
+					maxWidth: { xs: 'inherit', md: '900px', lg: 'inherit' },
+
 					boxShadow: 'none',
-				
 				}}>
 				<Toolbar
 					sx={{
 						backgroundColor: '#fff',
-						justifyContent: 'flex-end',
-						padding: '0 !important',
+						justifyContent: { xs: 'center', md: 'flex-end' },
+						padding: {
+							xs: '0 !important',
+							md: '0 20px !important',
+							lg: '0 !important',
+						},
 						gap: '45px',
-						mr: '120px',
+						mr: { xs: '0', lg: '120px' },
 					}}>
 					{LinkGlobalStyles}
-					<Link component={RouterLink} to="/" underline="none" className='header__link' >
+					<Link
+						component={RouterLink}
+						to="/"
+						underline="none"
+						className="header__link">
 						<GridViewOutlinedIcon fontSize="small" />
 						События
 					</Link>
-					<Link component={RouterLink} to="/calendar" underline="none"  className='header__link'>
-					<EventNoteOutlinedIcon fontSize="small" />
+					<Link
+						component={RouterLink}
+						to="/calendar"
+						underline="none"
+						className="header__link">
+						<EventNoteOutlinedIcon fontSize="small" />
 						Календарь
 					</Link>
 				</Toolbar>
