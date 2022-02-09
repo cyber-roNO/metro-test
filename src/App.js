@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { Routes, Route } from 'react-router-dom'
 import Header from './containers/Header/Header'
@@ -9,7 +9,7 @@ function App() {
 		<>
 			<Header />
 			<Routes>
-				<Route exact path="/" element={<EventsPage />} />
+				<Route exact path="/" element={<EventsPage />}/>
 				<Route path="/calendar" />
 				<Route path="/:id" element={<CardDetail />} />
 			

@@ -12,7 +12,7 @@ export default function MyCard(props) {
 	return (
 		<Card
 			sx={{
-				maxWidth: 353,
+				maxWidth: 406,
 				flexBasis: '50%',
 				border: '1px solid rgba(0, 0, 0, 0.06)',
 				borderRadius: '2px',
@@ -23,18 +23,19 @@ export default function MyCard(props) {
 					display: 'flex',
 					justifyContent: 'space-between',
 					alignItems: 'center',
+					padding: '16px 24px'
 				}}>
-				<Typography variant="h6" fontSize={16}>
+				<Typography variant="h3" fontSize={16}>
 					{props.card.title}
 				</Typography>
-				<CardActions>
+				<CardActions sx={{ padding: 0 }} >
 					<Link
 						underline="none"
 						component={RouterLink}
 						to={'/' + props.card.id}
 						fontSize={14}
 						variant="h6"
-						sx={{ color: '#1890FF' }}>
+						sx={{ color: '#1890FF'}}>
 						Больше
 					</Link>
 				</CardActions>
@@ -42,12 +43,18 @@ export default function MyCard(props) {
 
 			<CardMedia
 				component="img"
-				height="220"
+				height="255"
 				image={props.card.image}
 				alt="cover"
 			/>
-			<CardContent>
-				<Typography variant="h6" fontSize={16}>
+			<CardContent
+		
+				sx={{
+					padding: '24px'
+				}}
+				>
+			
+				<Typography variant="h3" fontSize={16}>
 					{moment(props.card.date).format('DD.MM.YYYY')}
 				</Typography>
 			</CardContent>

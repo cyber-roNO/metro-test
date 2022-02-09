@@ -8,10 +8,10 @@ import { NavLink as RouterLink } from 'react-router-dom'
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined'
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
 
-const theme = createTheme({
+export const theme = createTheme({
 	palette: {
 		primary: {
-			main: 'rgba(0, 0, 0, 0.85)',
+			main: '#242424',
 		},
 	},
 })
@@ -19,13 +19,33 @@ const theme = createTheme({
 const LinkGlobalStyles = (
 	<GlobalStyles
 		styles={{
+			'*' :{
+				margin: 0,
+				padding: 0,
+				boxSizing: 'border-box',
+			},
+			'body' : {
+				maxWidth: '1440px',
+				margin: '0 auto'
+			},
+			'html' : {
+				overflowX: 'hidden',
+				marginRight: 'calc(-1 * (100vw - 100%))',
+			  },
+			  'h3': {
+				  color: '#242424',
+				  fontWeight: '700 !important',
+				 
+			  },
+			
 			'.header__link': {
 				position: 'relative',
 				display: 'flex',
 				gap: '10px',
 				fontSize: 14,
+				fontWeight: 500,
 				lineHeight: '22px',
-				padding: '13px 20px',
+				padding: '8px 0px',
 				alignItems: 'center',
 				justifyContent: 'center',
 				transition: 'all .3s ease',
@@ -44,7 +64,7 @@ const LinkGlobalStyles = (
 					transition: 'width .3s ease',
 				},
 				'&:hover::after': {
-					width: 121,
+					width: '100%',
 				},
 
 			},
@@ -55,7 +75,7 @@ const LinkGlobalStyles = (
 					position: 'absolute',
 					bottom: '0',
 					display: 'block',
-					width: 121,
+					width: '100%',
 					height: '2px',
 					marginTop: '-2px',
 					background: '#1890FF',
@@ -74,10 +94,9 @@ export default function Header() {
 				position='static'
 				sx={{
 					backgroundColor: '#fff',
-					maxWidth: 1185,
-					margin:'0 auto',
-					mt: '36px',	
-					mb: '74px',
+					
+					pt: '53px',	
+					mb: '115px',
 					boxShadow: 'none',
 				
 				}}>
@@ -86,10 +105,11 @@ export default function Header() {
 						backgroundColor: '#fff',
 						justifyContent: 'flex-end',
 						padding: '0 !important',
-						gap: '20px',
+						gap: '45px',
+						mr: '120px',
 					}}>
 					{LinkGlobalStyles}
-					<Link component={RouterLink} to="/" underline="none" className='header__link' activeclassname="link__active" >
+					<Link component={RouterLink} to="/" underline="none" className='header__link' >
 						<GridViewOutlinedIcon fontSize="small" />
 						События
 					</Link>

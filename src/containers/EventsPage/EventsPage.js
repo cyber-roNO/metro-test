@@ -87,6 +87,7 @@ export default function EventsPage() {
 		)
 	} else {
 		return (
+			
 			<Container maxWidth="md">
 				<Box
 					sx={{
@@ -94,7 +95,7 @@ export default function EventsPage() {
 						flexDirection: 'row',
 						gap: '8px',
 						justifyContent: 'flex-end',
-						marginBottom: '28px',
+						marginBottom: '25px',
 					}}>
 					<Calendar
 						options={years}
@@ -112,7 +113,7 @@ export default function EventsPage() {
 						display: 'flex',
 						flexWrap: 'wrap',
 						justifyContent: 'space-between',
-						gap: '105px',
+						gap: '40px',
 					}}>
 					{year !== 'все года' && mounth !== 'все месяцы'
 						? items
