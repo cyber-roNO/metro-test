@@ -5,15 +5,34 @@ import moment from 'moment'
 import 'moment/locale/ru'
 import MyCard from '../../components/Card/Card'
 import './loader.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchEvents } from '../../redux/actions/eventsActions'
+
+export const years = ['2020', '2021', '2022', 'все года']
+export const mounths = {
+	1: 'январь',
+	2: 'февраль',
+	3: 'март',
+	4: 'апрель',
+	5: 'май',
+	6: 'июнь',
+	7: 'июль',
+	8: 'август',
+	9: 'сентябрь',
+	10: 'октябрь',
+	11: 'ноябрь',
+	12: 'декабрь',
+	13: 'все месяцы',
+}
 
 export default function EventsPage() {
-	let [year, setYear] = useState(() => {
+	const [year, setYear] = useState(() => {
 		const saved = localStorage.getItem('year')
-		return saved || ''
+		return saved || 'все года'
 	})
-	let [mounth, setMounth] = useState(() => {
+	const [mounth, setMounth] = useState(() => {
 		const saved = localStorage.getItem('mounth')
-		return saved || ''
+		return saved || 'все месяцы'
 	})
 
 	const handleChangeYear = (event) => {
@@ -28,51 +47,18 @@ export default function EventsPage() {
 		localStorage.setItem('mounth', mounth)
 	}, [year, mounth])
 
-	const years = ['2020', '2021', '2022', 'все года']
-	const mounths = {
-		1: 'январь',
-		2: 'февраль',
-		3: 'март',
-		4: 'апрель',
-		5: 'май',
-		6: 'июнь',
-		7: 'июль',
-		8: 'август',
-		9: 'сентябрь',
-		10: 'октябрь',
-		11: 'ноябрь',
-		12: 'декабрь',
-		13: 'все месяцы',
-	}
-
-	const [error, setError] = useState(null)
-	const [isLoaded, setIsLoaded] = useState(false)
-	const [items, setItems] = useState([])
+	const dispatch = useDispatch()
+	const { events, eventsFetching, error } = useSelector((state) => state.events)
 
 	useEffect(() => {
-		fetch('https://run.mocky.io/v3/49b8fbae-13e6-4aac-a8d1-644e3881cc62')
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					setIsLoaded(true)
-					setItems(result)
-				},
-
-				(error) => {
-					setIsLoaded(true)
-					setError(error)
-				}
-			)
+		dispatch(fetchEvents())
 	}, [])
-	if (!year) {
-		year = 'все года'
-	}
-	if (!mounth) {
-		mounth = 'все месяцы'
-	}
+
 	if (error) {
 		return <div>Ошибка: {error.message}</div>
-	} else if (!isLoaded) {
+	}
+
+	if (!!eventsFetching) {
 		return (
 			<div className="lds-roller">
 				<div></div>
@@ -85,57 +71,57 @@ export default function EventsPage() {
 				<div></div>
 			</div>
 		)
-	} else {
-		return (
-			<Container
-				maxWidth="md"
-				sx={{
-					paddingLeft: '20px 	!important',
-					paddingRight: '20px !important',
-				}}>
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'row',
-						gap: '8px',
-						justifyContent: 'flex-end',
-						maxWidth: { xs: '335px', sm: '406px', md: 'initial' },
-						m: { xs: '0 auto 25px auto', md: '0 0 25px 0' },
-					}}>
-					<Calendar
-						options={years}
-						value={year ? year : 'все года'}
-						handleChange={handleChangeYear}
-					/>
-					<Calendar
-						options={Object.values(mounths)}
-						value={mounth ? mounth : 'все месяцы'}
-						handleChange={handleChangeMounth}
-					/>
-				</Box>
-				<Box
-					sx={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						justifyContent: { xs: 'center', md: 'space-between' },
-						gap: '40px',
-					}}>
-					{year !== 'все года' && mounth !== 'все месяцы'
-						? items
-								.filter((item) => moment(item.date).format('YYYY') === year)
-								.filter((item) => moment(item.date).format('MMMM') === mounth)
-								.map((card, index) => <MyCard card={card} key={index} />)
-						: year === 'все года' && mounth !== 'все месяцы'
-						? items
-								.filter((item) => moment(item.date).format('MMMM') === mounth)
-								.map((card, index) => <MyCard card={card} key={index} />)
-						: year !== 'все года' && mounth === 'все месяцы'
-						? items
-								.filter((item) => moment(item.date).format('YYYY') === year)
-								.map((card, index) => <MyCard card={card} key={index} />)
-						: items.map((card, index) => <MyCard card={card} key={index} />)}
-				</Box>
-			</Container>
-		)
 	}
+
+	return (
+		<Container
+			maxWidth="md"
+			sx={{
+				paddingLeft: '20px 	!important',
+				paddingRight: '20px !important',
+			}}>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					gap: '8px',
+					justifyContent: 'flex-end',
+					maxWidth: { xs: '335px', sm: '406px', md: 'initial' },
+					m: { xs: '0 auto 25px auto', md: '0 0 25px 0' },
+				}}>
+				<Calendar
+					options={years}
+					value={year ? year : 'все года'}
+					handleChange={handleChangeYear}
+				/>
+				<Calendar
+					options={Object.values(mounths)}
+					value={mounth ? mounth : 'все месяцы'}
+					handleChange={handleChangeMounth}
+				/>
+			</Box>
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'wrap',
+					justifyContent: { xs: 'center', md: 'space-between' },
+					gap: '40px',
+				}}>
+				{year !== 'все года' && mounth !== 'все месяцы'
+					? events
+							.filter((item) => moment(item.date).format('YYYY') === year)
+							.filter((item) => moment(item.date).format('MMMM') === mounth)
+							.map((card, index) => <MyCard card={card} key={index} />)
+					: year === 'все года' && mounth !== 'все месяцы'
+					? events
+							.filter((item) => moment(item.date).format('MMMM') === mounth)
+							.map((card, index) => <MyCard card={card} key={index} />)
+					: year !== 'все года' && mounth === 'все месяцы'
+					? events
+							.filter((item) => moment(item.date).format('YYYY') === year)
+							.map((card, index) => <MyCard card={card} key={index} />)
+					: events.map((card, index) => <MyCard card={card} key={index} />)}
+			</Box>
+		</Container>
+	)
 }

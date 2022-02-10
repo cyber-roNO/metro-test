@@ -5,8 +5,8 @@ import { Link } from '@mui/material'
 import GlobalStyles from '@mui/material/GlobalStyles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { NavLink as RouterLink } from 'react-router-dom'
-import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined'
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined'
+import { ReactComponent as EventIcon } from '../../img/events.svg'
+import { ReactComponent as CalendarIcon } from '../../img/calendar.svg'
 
 export const theme = createTheme({
 	palette: {
@@ -51,6 +51,12 @@ const LinkGlobalStyles = (
 				'&:hover': {
 					color: '#1890FF',
 				},
+				'svg path': {
+					transition: 'stroke .3s ease',
+				},
+				'&:hover svg path': {
+					stroke: '#1890FF',
+				},
 				'&:after': {
 					content: '""',
 					position: 'absolute',
@@ -68,6 +74,9 @@ const LinkGlobalStyles = (
 			},
 			'.active': {
 				color: '#1890FF !important',
+				'svg path': {
+					stroke: '#1890FF',
+				},
 				'&:after': {
 					content: '""',
 					position: 'absolute',
@@ -133,7 +142,7 @@ export default function Header() {
 						to="/"
 						underline="none"
 						className="header__link">
-						<GridViewOutlinedIcon fontSize="small" />
+						<EventIcon />
 						События
 					</Link>
 					<Link
@@ -141,7 +150,7 @@ export default function Header() {
 						to="/calendar"
 						underline="none"
 						className="header__link">
-						<EventNoteOutlinedIcon fontSize="small" />
+						<CalendarIcon />
 						Календарь
 					</Link>
 				</Toolbar>

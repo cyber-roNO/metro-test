@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl'
 import { NativeSelect } from '@mui/material'
 import InputBase from '@mui/material/InputBase'
 import { styled } from '@mui/material/styles'
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import { ReactComponent as ArrowIcon } from '../../img/icon-arrow.svg'
 
 const MyInput = styled(InputBase)(({ theme }) => ({
 	'label + &': {
@@ -25,13 +25,16 @@ const MyInput = styled(InputBase)(({ theme }) => ({
 		},
 		icon: {},
 	},
+	'& .MuiNativeSelect-icon': {
+		right: '12px',
+	},
 }))
 
 export default function Calendar(props) {
 	return (
 		<Box>
 			<FormControl
-				sx={{ minWidth: 72, maxHeight: 32 }}
+				sx={{ minWidth: 74, maxHeight: 32 }}
 				size="small"
 				variant="standard">
 				<NativeSelect
@@ -39,7 +42,7 @@ export default function Calendar(props) {
 					input={<MyInput />}
 					onChange={props.handleChange}
 					id="demo-customized-select-native"
-					IconComponent={KeyboardArrowDownOutlinedIcon}
+					IconComponent={ArrowIcon}
 					sx={{ fontSize: 14, padding: 0, height: '100%' }}>
 					{props.options.map((value, index) => (
 						<option key={index} value={value}>

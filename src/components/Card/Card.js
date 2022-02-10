@@ -14,7 +14,7 @@ export default function MyCard(props) {
 			sx={{
 				maxWidth: { xs: 335, sm: 406 },
 				flexBasis: { xs: '100%', md: '50%' },
-				border: '1px solid rgba(0, 0, 0, 0.06)',
+				border: '1px solid #E7E7E7',
 				borderRadius: '2px',
 				boxShadow: 'none',
 			}}>
