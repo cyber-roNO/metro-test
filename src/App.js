@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Header from './containers/Header/Header'
 import EventsPage from './containers/EventsPage/EventsPage'
 import CardDetail from './components/CardDetail/CardDetail'
@@ -10,9 +10,10 @@ function App() {
 		<>
 			<Header />
 			<Routes>
-				<Route exact path="/" element={<EventsPage />} />
+				<Route path="/" element={<Navigate to="/events" />} />
+				<Route exact path="/events" element={<EventsPage />} />
 				<Route path="/calendar" element={<CalendarPage />} />
-				<Route path="/:id" element={<CardDetail />} />
+				<Route path="/events/:id" element={<CardDetail />} />
 			</Routes>
 		</>
 	)

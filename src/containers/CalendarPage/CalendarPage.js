@@ -35,9 +35,9 @@ export default function CalendarPage() {
 	const [cardId, setCardId] = useState('')
 	const handleOpen = (event) => {
 		setCardId(event.target.id)
-
 		setOpen(true)
 	}
+
 	const handleClose = () => setOpen(false)
 
 	const dispatch = useDispatch()
@@ -52,8 +52,10 @@ export default function CalendarPage() {
 	}, [year, month])
 
 	const { userEvents } = useSelector((state) => state.user)
+
 	const itemId = userEvents.filter((item) => item.id === +cardId)
 
+	console.log(itemId)
 	const [pageSize, setPageSize] = useState(3)
 	const [filteredEvents] = useFilteredEvents(userEvents, year, month)
 	const [paginatedEvents, setPaginatedEvents] = useState(filteredEvents)
@@ -61,7 +63,6 @@ export default function CalendarPage() {
 	useEffect(() => {
 		setPaginatedEvents(filteredEvents.slice(0, pageSize))
 	}, [pageSize, filteredEvents])
-
 	const handlePageSize = () => {
 		setPageSize((prev) => prev + 3)
 	}

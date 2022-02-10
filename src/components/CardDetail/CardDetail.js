@@ -55,7 +55,8 @@ export default function CardDetail() {
 
 	const { events, eventsFetching, error } = useSelector((state) => state.events)
 
-	const id = +window.location.pathname.replace('/', '')
+	const id = +window.location.pathname.replace('/events/', '')
+	console.log(id)
 	const itemId = events.filter((item) => item.id === id)
 
 	const { userEvents } = useSelector((state) => state.user)

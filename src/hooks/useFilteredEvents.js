@@ -36,6 +36,7 @@ export const useFilteredEvents = (userEvents, year, mounth) => {
 			)
 			return
 		}
+		setFilteredEvents(userEvents)
 	}, [userEvents, year, mounth])
 
 	return [filteredEvents]

@@ -9,7 +9,6 @@ import {
 	Card,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
-import { ReactComponent as DeleteIcon } from '../../img/icon-delete.svg'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 
 export default function CalendarCard(props) {
@@ -76,19 +75,6 @@ export default function CalendarCard(props) {
 					}}>
 					удалить
 				</Button>
-				<Box
-					variant="span"
-					sx={{
-						padding: '0 !important',
-						background: '#E7E7E7',
-						width: '1px',
-						height: '14px',
-						display: {
-							xs: 'none',
-							md: 'block',
-						},
-					}}
-				/>
 				<DeleteOutlinedIcon
 					onClick={props.handleOpen}
 					id={props.card.id}
@@ -105,10 +91,24 @@ export default function CalendarCard(props) {
 					}}
 				/>
 
+				<Box
+					variant="span"
+					sx={{
+						padding: '0 !important',
+						background: '#E7E7E7',
+						width: '1px',
+						height: '14px',
+						display: {
+							xs: 'none',
+							md: 'block',
+						},
+					}}
+				/>
+
 				<Link
 					underline="none"
 					component={RouterLink}
-					to={'/' + props.card.id}
+					to={'/events/' + props.card.id}
 					fontSize={14}
 					variant="h6"
 					sx={{ color: '#1890FF', display: { xs: 'none', md: 'block' } }}>

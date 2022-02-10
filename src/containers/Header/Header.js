@@ -138,7 +138,7 @@ export default function Header() {
 					{LinkGlobalStyles}
 					<Link
 						component={RouterLink}
-						to="/"
+						to="/events"
 						underline="none"
 						className="header__link">
 						<EventIcon />

@@ -32,7 +32,7 @@ export default function MyCard(props) {
 					<Link
 						underline="none"
 						component={RouterLink}
-						to={'/' + props.card.id}
+						to={'/events/' + props.card.id}
 						fontSize={14}
 						variant="h6"
 						sx={{ color: '#1890FF' }}>
