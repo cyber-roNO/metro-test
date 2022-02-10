@@ -28,6 +28,7 @@ export default function EventsPage() {
 	useEffect(() => {
 		localStorage.setItem('year', year)
 		localStorage.setItem('month', month)
+		// eslint-disable-next-line
 	}, [year, month])
 
 	const dispatch = useDispatch()
@@ -36,6 +37,7 @@ export default function EventsPage() {
 
 	useEffect(() => {
 		dispatch(fetchEvents())
+		// eslint-disable-next-line
 	}, [])
 
 	if (error) {

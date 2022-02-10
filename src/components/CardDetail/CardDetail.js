@@ -47,6 +47,7 @@ export default function CardDetail() {
 	useEffect(() => {
 		localStorage.setItem('name', name)
 		localStorage.setItem('surname', surname)
+		// eslint-disable-next-line
 	}, [name, surname])
 
 	const [open, setOpen] = useState(false)

@@ -49,6 +49,7 @@ export default function CalendarPage() {
 	useEffect(() => {
 		localStorage.setItem('year', year)
 		localStorage.setItem('month', month)
+		// eslint-disable-next-line
 	}, [year, month])
 
 	const { userEvents } = useSelector((state) => state.user)
@@ -62,6 +63,7 @@ export default function CalendarPage() {
 
 	useEffect(() => {
 		setPaginatedEvents(filteredEvents.slice(0, pageSize))
+		// eslint-disable-next-line
 	}, [pageSize, filteredEvents])
 	const handlePageSize = () => {
 		setPageSize((prev) => prev + 3)

@@ -37,6 +37,7 @@ export const useFilteredEvents = (userEvents, year, mounth) => {
 			return
 		}
 		setFilteredEvents(userEvents)
+		// eslint-disable-next-line
 	}, [userEvents, year, mounth])
 
 	return [filteredEvents]
