@@ -84,7 +84,8 @@ export default function CalendarPage() {
 					flexDirection: 'row',
 					gap: '8px',
 					justifyContent: 'flex-end',
-					maxWidth: { xs: '335px', sm: '406px', md: 'initial' },
+					witdh: '100%',
+					minWidth: { xs: '335px', sm: '406px', md: 'initial' },
 					m: { xs: '0 auto 25px auto', md: '0 0 25px 0' },
 				}}>
 				<Calendar
