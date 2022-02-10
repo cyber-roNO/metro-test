@@ -10,6 +10,7 @@ import {
 	CardMedia,
 } from '@mui/material'
 import { ReactComponent as WarningIcon } from '../../img/icon-warning.svg'
+import { ButtonStyle } from './ModalSubmit'
 
 export default function ModalRemove(props) {
 	const style = {
@@ -66,14 +67,7 @@ export default function ModalRemove(props) {
 							variant="outlined"
 							onClick={props.handleClose}
 							sx={{
-								borderRadius: '50px',
-								textTransform: 'none',
-								fontSize: '14px',
-								lineHeight: '22px',
-								padding: '7px 20px',
-								minWidth: '59px',
-								fontWeight: 'bold',
-								boxShadow: 'none',
+								...ButtonStyle,
 								color: 'rgba(66, 66, 66, 0.45)',
 								border: '1px solid rgba(66, 66, 66, 0.45) !important',
 							}}>
@@ -82,17 +76,7 @@ export default function ModalRemove(props) {
 						<Button
 							onClick={props.handleRemoveEvent}
 							variant="contained"
-							sx={{
-								background: '#1890FF',
-								borderRadius: '50px',
-								textTransform: 'none',
-								fontSize: '14px',
-								lineHeight: '22px',
-								padding: '7px 20px',
-								minWidth: '59px',
-								fontWeight: 'bold',
-								boxShadow: 'none',
-							}}>
+							sx={{ ...ButtonStyle, background: '#1890FF' }}>
 							ОК
 						</Button>
 					</Box>

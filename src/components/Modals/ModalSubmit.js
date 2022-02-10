@@ -10,6 +10,17 @@ import {
 	CardMedia,
 } from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+export const ButtonStyle = {
+	borderRadius: '50px',
+	textTransform: 'none',
+	fontSize: '14px',
+	lineHeight: '22px',
+	padding: '7px 20px',
+	minWidth: '59px',
+	fontWeight: 'bold',
+	boxShadow: 'none',
+	letterSpacing: 0,
+}
 
 export default function ModalSubmit(props) {
 	const style = {
@@ -131,14 +142,7 @@ export default function ModalSubmit(props) {
 							variant="outlined"
 							onClick={props.handleClose}
 							sx={{
-								borderRadius: '50px',
-								textTransform: 'none',
-								fontSize: '14px',
-								lineHeight: '22px',
-								padding: '7px 20px',
-								minWidth: '59px',
-								fontWeight: 'bold',
-								boxShadow: 'none',
+								...ButtonStyle,
 								color: 'rgba(66, 66, 66, 0.45)',
 								border: '1px solid rgba(66, 66, 66, 0.45) !important',
 							}}>
@@ -147,17 +151,7 @@ export default function ModalSubmit(props) {
 						<Button
 							onClick={props.handleSubmitForm}
 							variant="contained"
-							sx={{
-								background: '#1890FF',
-								borderRadius: '50px',
-								textTransform: 'none',
-								fontSize: '14px',
-								lineHeight: '22px',
-								padding: '7px 20px',
-								minWidth: '59px',
-								fontWeight: 'bold',
-								boxShadow: 'none',
-							}}>
+							sx={{ ...ButtonStyle, background: '#1890FF' }}>
 							ОК
 						</Button>
 					</Box>

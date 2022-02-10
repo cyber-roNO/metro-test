@@ -4,7 +4,7 @@ import { Box, Container } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/ru'
 import MyCard from '../../components/Card/Card'
-import './loader.css'
+import '../../loader/loader.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchEvents } from '../../redux/actions/eventsActions'
 

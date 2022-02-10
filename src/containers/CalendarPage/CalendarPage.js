@@ -11,6 +11,7 @@ import moment from 'moment'
 import { removeEvent } from '../../redux/actions/userActions'
 
 import { Button } from '@mui/material'
+
 export default function CalendarPage() {
 	const [year, setYear] = useState(() => {
 		const saved = localStorage.getItem('year')
@@ -33,7 +34,6 @@ export default function CalendarPage() {
 	const [cardId, setCardId] = useState('')
 	const handleOpen = (event) => {
 		setCardId(event.target.value)
-
 		setOpen(true)
 	}
 	const handleClose = () => setOpen(false)
