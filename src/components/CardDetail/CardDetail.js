@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Container, CardMedia } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import moment from 'moment'
@@ -15,6 +15,7 @@ import {
 	setFirstName,
 	setSecondName,
 } from '../../redux/actions/userActions'
+import { ButtonStyle } from '../Modals/ModalSubmit'
 
 export default function CardDetail() {
 	const { firstName, secondName } = useSelector((state) => state.user)
@@ -59,7 +60,7 @@ export default function CardDetail() {
 
 	const { userEvents } = useSelector((state) => state.user)
 	const usersCount = userEvents.filter((item) => item.id === id)
-	console.log(firstName)
+
 	if (error) {
 		return <div>Ошибка: {error.message}</div>
 	}
@@ -102,7 +103,7 @@ export default function CardDetail() {
 							gap: { xs: '20px', md: '73px' },
 							maxWidth: { xs: '335px', md: '900px', lg: '1200px' },
 							p: '0 !important',
-							mb: '70px',
+							mb: { xs: '30px', md: '70px' },
 						}}>
 						<Box>
 							<CardMedia
@@ -162,15 +163,9 @@ export default function CardDetail() {
 									variant="contained"
 									color="error"
 									sx={{
+										...ButtonStyle,
 										alignSelf: 'flex-end',
 										background: '#FF4D4F',
-										borderRadius: '50px',
-										textTransform: 'none',
-										fontSize: '14px',
-										lineHeight: '22px',
-										padding: '7px 20px',
-										gap: '8px',
-										boxShadow: 'none',
 									}}>
 									Отписаться
 								</Button>
@@ -179,15 +174,10 @@ export default function CardDetail() {
 									onClick={handleOpen}
 									variant="contained"
 									sx={{
+										...ButtonStyle,
 										alignSelf: 'flex-end',
 										background: '#1890FF',
-										borderRadius: '50px',
-										textTransform: 'none',
-										fontSize: '14px',
-										lineHeight: '22px',
-										padding: '7px 20px',
-										gap: '8px',
-										boxShadow: 'none',
+										gap: '10px',
 									}}>
 									<ArrowForwardIosOutlinedIcon sx={{ width: '14px' }} />
 									Записаться

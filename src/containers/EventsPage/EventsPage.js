@@ -1,61 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import '../../loader/loader.css'
+import { useState, useEffect } from 'react'
 import Calendar from '../../components/Calendar/Calendar'
 import { Box, Container } from '@mui/material'
-import moment from 'moment'
-import 'moment/locale/ru'
 import MyCard from '../../components/Card/Card'
-import '../../loader/loader.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchEvents } from '../../redux/actions/eventsActions'
-
-export const years = ['2020', '2021', '2022', 'все года']
-export const mounths = {
-	1: 'январь',
-	2: 'февраль',
-	3: 'март',
-	4: 'апрель',
-	5: 'май',
-	6: 'июнь',
-	7: 'июль',
-	8: 'август',
-	9: 'сентябрь',
-	10: 'октябрь',
-	11: 'ноябрь',
-	12: 'декабрь',
-	13: 'все месяцы',
-}
+import { useFilteredEvents } from '../../hooks/useFilteredEvents'
+import { years, months, ALL_YEARS, ALL_MONTHS } from '../../constants/constants'
 
 export default function EventsPage() {
 	const [year, setYear] = useState(() => {
 		const saved = localStorage.getItem('year')
-		return saved || 'все года'
+		return saved || ALL_YEARS
 	})
-	const [mounth, setMounth] = useState(() => {
-		const saved = localStorage.getItem('mounth')
-		return saved || 'все месяцы'
+	const [month, setmonth] = useState(() => {
+		const saved = localStorage.getItem('month')
+		return saved || ALL_MONTHS
 	})
 
 	const handleChangeYear = (event) => {
 		setYear(event.target.value)
 	}
-	const handleChangeMounth = (event) => {
-		setMounth(event.target.value)
+	const handleChangemonth = (event) => {
+		setmonth(event.target.value)
 	}
 
 	useEffect(() => {
 		localStorage.setItem('year', year)
-		localStorage.setItem('mounth', mounth)
-	}, [year, mounth])
+		localStorage.setItem('month', month)
+	}, [year, month])
 
 	const dispatch = useDispatch()
 	const { events, eventsFetching, error } = useSelector((state) => state.events)
+	const [filteredEvents] = useFilteredEvents(events, year, month)
 
 	useEffect(() => {
 		dispatch(fetchEvents())
 	}, [])
 
 	if (error) {
-		return <div>Ошибка: {error.message}</div>
+		return <div>Ошибка: {error?.message || error}</div>
 	}
 
 	if (!!eventsFetching) {
@@ -91,13 +75,13 @@ export default function EventsPage() {
 				}}>
 				<Calendar
 					options={years}
-					value={year ? year : 'все года'}
+					value={year ? year : ALL_YEARS}
 					handleChange={handleChangeYear}
 				/>
 				<Calendar
-					options={Object.values(mounths)}
-					value={mounth ? mounth : 'все месяцы'}
-					handleChange={handleChangeMounth}
+					options={Object.values(months)}
+					value={month ? month : ALL_MONTHS}
+					handleChange={handleChangemonth}
 				/>
 			</Box>
 			<Box
@@ -107,20 +91,9 @@ export default function EventsPage() {
 					justifyContent: { xs: 'center', md: 'space-between' },
 					gap: '40px',
 				}}>
-				{year !== 'все года' && mounth !== 'все месяцы'
-					? events
-							.filter((item) => moment(item.date).format('YYYY') === year)
-							.filter((item) => moment(item.date).format('MMMM') === mounth)
-							.map((card, index) => <MyCard card={card} key={index} />)
-					: year === 'все года' && mounth !== 'все месяцы'
-					? events
-							.filter((item) => moment(item.date).format('MMMM') === mounth)
-							.map((card, index) => <MyCard card={card} key={index} />)
-					: year !== 'все года' && mounth === 'все месяцы'
-					? events
-							.filter((item) => moment(item.date).format('YYYY') === year)
-							.map((card, index) => <MyCard card={card} key={index} />)
-					: events.map((card, index) => <MyCard card={card} key={index} />)}
+				{filteredEvents.map((card, index) => (
+					<MyCard card={card} key={index} />
+				))}
 			</Box>
 		</Container>
 	)

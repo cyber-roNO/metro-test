@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import {
 	Link,
 	Button,
@@ -11,6 +9,8 @@ import {
 	Card,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
+import { ReactComponent as DeleteIcon } from '../../img/icon-delete.svg'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 
 export default function CalendarCard(props) {
 	return (
@@ -25,6 +25,9 @@ export default function CalendarCard(props) {
 				maxWidth: { xs: '335px', sm: '406px', md: 'initial' },
 				m: { xs: '0 auto 0px auto', md: '0' },
 				width: '100%',
+				'&.MuiCard-root:first-of-type': {
+					borderTop: 'none',
+				},
 			}}>
 			<CardContent
 				sx={{
@@ -53,13 +56,14 @@ export default function CalendarCard(props) {
 					</Typography>
 				</Box>
 			</CardContent>
-			<CardActions sx={{ padding: 0 }}>
+			<CardActions sx={{ padding: 0, gap: '8px' }}>
 				<Button
 					onClick={props.handleOpen}
 					fontSize={14}
 					variant="h6"
-					value={props.card.id}
+					id={props.card.id}
 					sx={{
+						padding: '0 !important',
 						color: '#1890FF',
 						display: {
 							xs: 'none',
@@ -72,6 +76,35 @@ export default function CalendarCard(props) {
 					}}>
 					удалить
 				</Button>
+				<Box
+					variant="span"
+					sx={{
+						padding: '0 !important',
+						background: '#E7E7E7',
+						width: '1px',
+						height: '14px',
+						display: {
+							xs: 'none',
+							md: 'block',
+						},
+					}}
+				/>
+				<DeleteOutlinedIcon
+					onClick={props.handleOpen}
+					id={props.card.id}
+					sx={{
+						padding: '4px',
+						border: ' 1px solid #E7E7E7',
+						minWidth: 'inherit',
+						fontSize: '26px',
+						display: {
+							xs: 'block',
+							md: 'none',
+						},
+						textTransform: 'none',
+					}}
+				/>
+
 				<Link
 					underline="none"
 					component={RouterLink}

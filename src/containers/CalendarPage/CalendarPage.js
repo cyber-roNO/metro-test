@@ -1,39 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, Container } from '@mui/material'
 import Calendar from '../../components/Calendar/Calendar'
 
 import CalendarCard from '../../components/CalendarCard/CalendarCard'
-import { years } from '../EventsPage/EventsPage'
-import { mounths } from '../EventsPage/EventsPage'
+
 import ModalRemove from '../../components/Modals/ModalRemove'
-import moment from 'moment'
 import { removeEvent } from '../../redux/actions/userActions'
 
 import { Button } from '@mui/material'
+import { useFilteredEvents } from '../../hooks/useFilteredEvents'
+import { years, months, ALL_YEARS, ALL_MONTHS } from '../../constants/constants'
+import { ButtonStyle } from '../../components/Modals/ModalSubmit'
 
 export default function CalendarPage() {
 	const [year, setYear] = useState(() => {
 		const saved = localStorage.getItem('year')
-		return saved || 'все года'
+		return saved || ALL_YEARS
 	})
-	const [mounth, setMounth] = useState(() => {
-		const saved = localStorage.getItem('mounth')
-		return saved || 'все месяцы'
+	const [month, setmonth] = useState(() => {
+		const saved = localStorage.getItem('month')
+		return saved || ALL_MONTHS
 	})
 
 	const handleChangeYear = (event) => {
 		setYear(event.target.value)
 	}
-	const handleChangeMounth = (event) => {
-		setMounth(event.target.value)
+	const handleChangemonth = (event) => {
+		setmonth(event.target.value)
 	}
 
 	const [open, setOpen] = useState(false)
 
 	const [cardId, setCardId] = useState('')
 	const handleOpen = (event) => {
-		setCardId(event.target.value)
+		setCardId(event.target.id)
+
 		setOpen(true)
 	}
 	const handleClose = () => setOpen(false)
@@ -46,10 +48,23 @@ export default function CalendarPage() {
 
 	useEffect(() => {
 		localStorage.setItem('year', year)
-		localStorage.setItem('mounth', mounth)
-	}, [year, mounth])
+		localStorage.setItem('month', month)
+	}, [year, month])
+
 	const { userEvents } = useSelector((state) => state.user)
 	const itemId = userEvents.filter((item) => item.id === +cardId)
+
+	const [pageSize, setPageSize] = useState(3)
+	const [filteredEvents] = useFilteredEvents(userEvents, year, month)
+	const [paginatedEvents, setPaginatedEvents] = useState(filteredEvents)
+
+	useEffect(() => {
+		setPaginatedEvents(filteredEvents.slice(0, pageSize))
+	}, [pageSize, filteredEvents])
+
+	const handlePageSize = () => {
+		setPageSize((prev) => prev + 3)
+	}
 
 	return (
 		<Container
@@ -57,6 +72,8 @@ export default function CalendarPage() {
 			sx={{
 				paddingLeft: '20px 	!important',
 				paddingRight: '20px !important',
+				display: 'flex',
+				flexDirection: 'column',
 			}}>
 			<Box
 				sx={{
@@ -69,44 +86,31 @@ export default function CalendarPage() {
 				}}>
 				<Calendar
 					options={years}
-					value={year ? year : 'все года'}
+					value={year ? year : ALL_YEARS}
 					handleChange={handleChangeYear}
 				/>
 				<Calendar
-					options={Object.values(mounths)}
-					value={mounth ? mounth : 'все месяцы'}
-					handleChange={handleChangeMounth}
+					options={Object.values(months)}
+					value={month ? month : ALL_MONTHS}
+					handleChange={handleChangemonth}
 				/>
 			</Box>
 			<Box
 				sx={{
 					display: 'flex',
 					flexDirection: 'column',
+					mb: '65px',
 				}}>
-				{year !== 'все года' && mounth !== 'все месяцы'
-					? userEvents
-							.filter((item) => moment(item.date).format('YYYY') === year)
-							.filter((item) => moment(item.date).format('MMMM') === mounth)
-							.map((card, index) => (
-								<CalendarCard card={card} key={index} handleOpen={handleOpen} />
-							))
-					: year === 'все года' && mounth !== 'все месяцы'
-					? userEvents
-							.filter((item) => moment(item.date).format('MMMM') === mounth)
-							.map((card, index) => (
-								<CalendarCard card={card} key={index} handleOpen={handleOpen} />
-							))
-					: year !== 'все года' && mounth === 'все месяцы'
-					? userEvents
-							.filter((item) => moment(item.date).format('YYYY') === year)
-							.map((card, index) => (
-								<CalendarCard card={card} key={index} handleOpen={handleOpen} />
-							))
-					: userEvents.map((card, index) => (
-							<CalendarCard card={card} key={index} handleOpen={handleOpen} />
-					  ))}
+				{paginatedEvents.map((card, index) => (
+					<CalendarCard card={card} key={index} handleOpen={handleOpen} />
+				))}
 			</Box>
-			{/* <Button variant="contained">Загрузить больше</Button> */}
+			<Button
+				onClick={handlePageSize}
+				variant="contained"
+				sx={{ ...ButtonStyle, background: '#1890FF', alignSelf: 'center' }}>
+				Загрузить больше
+			</Button>
 			<ModalRemove
 				open={open}
 				handleClose={handleClose}

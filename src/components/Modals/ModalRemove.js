@@ -1,14 +1,4 @@
-import React from 'react'
-import {
-	Modal,
-	Typography,
-	Box,
-	Button,
-	TextField,
-	Backdrop,
-	Fade,
-	CardMedia,
-} from '@mui/material'
+import { Modal, Typography, Box, Button, Backdrop, Fade } from '@mui/material'
 import { ReactComponent as WarningIcon } from '../../img/icon-warning.svg'
 import { ButtonStyle } from './ModalSubmit'
 
